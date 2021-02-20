@@ -21,12 +21,22 @@ verifier:
   name: inspec
 
 platforms:
-  - name: ubuntu-18.04
-  - name: centos-7
-
+  - name: windows2016
+    driver_config:
+     box: mwrock/Windows2016
+     os_type: windows
+     communicator: winrm
+    transport:
+      name: winrm
+      elevated: true
+  
 suites:
   - name: default
+    provisioner:
+      policyfile_path: Policyfile.rb
     verifier:
       inspec_tests:
         - test/integration/default
     attributes:
+    includes:
+      -windows2016
