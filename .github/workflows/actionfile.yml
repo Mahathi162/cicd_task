@@ -1,0 +1,47 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: 
+     - master
+  pull_request:
+    branches:
+     - '*'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: [self-hosted, chef]
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        name: Checkout Code
+      # Runs a single command using the runners shell
+      - name: Lint
+        run: |
+          chef exec rake clean
+          chef exec rake style
+      - name: promote cookbook
+        if: github.event_name == 'pull_request'
+        run: chef exec rake release
+
+      # Runs a set of commands using the runners shell
+      #- name: Run Rake Files & Upload to Artifactory
+        #run: |
+         #chef exec rake release:bump:patch release:bundle
+        #Set-Variable -Name version -Value (Get-Content -Path "${{ github.workspace }}\VERSION")
+        #$version = $version -replace '"', ""
+        #echo "version: ${version}"
+        #cmd /c curl -u ${{ secrets.HSP_ARTIFACTORY_CA_USER }}:${{ secrets.HSP_ARTIFACTORY_CA_PASSWORD }} -T ${{ github.workspace }}\artifacts\ncr_dfw_tcagent_build_policies_${version}.zip "https://ncr.jfrog.io/artifactory/hsg-policies-chef-snapshots/ncr_dfw_tcagent_build/policies/"
+        #git push 
