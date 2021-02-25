@@ -32,6 +32,9 @@ jobs:
         run: |
           chef exec rake clean
           chef exec rake style
+      - name: kitchen test
+        if: github.event_name == 'pull_request'
+        run: chef exec rake 'test:kitchen:all'
       - name: promote cookbook
         if: github.event_name == 'pull_request'
         run: chef exec rake release
