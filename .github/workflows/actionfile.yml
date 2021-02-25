@@ -38,9 +38,7 @@ jobs:
       - name: promote cookbook
         if: github.event_name == 'pull_request'
         run: chef exec rake release
-
-      # Runs a set of commands using the runners shell
-      #- name: Run Rake Files & Upload to Artifactory
+     #- name: Run Rake Files & Upload to Artifactory
         #run: |
          #chef exec rake release:bump:patch release:bundle
         #Set-Variable -Name version -Value (Get-Content -Path "${{ github.workspace }}\VERSION")
