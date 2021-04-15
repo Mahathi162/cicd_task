@@ -31,11 +31,11 @@ jobs:
         with:
           ruby-version: 2.6.x
       # Runs a single command using the runners shell
-      - name: Setup ChefDK
-        run: |
-          cd /tmp
-          wget https://packages.chef.io/files/stable/chefdk/4.11.0/ubuntu/16.04/chefdk_4.11.0-1_amd64.deb
-          sudo apt install ./chefdk_4.11.0-1_amd64.deb
+      #- name: Setup ChefDK
+       # run: |
+         # cd /tmp
+          #wget https://packages.chef.io/files/stable/chefdk/4.11.0/ubuntu/16.04/chefdk_4.11.0-1_amd64.deb
+          # sudo apt install ./chefdk_4.11.0-1_amd64.deb
           
       - name: Lint
         run: |
